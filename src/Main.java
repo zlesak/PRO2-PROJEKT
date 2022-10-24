@@ -5,9 +5,9 @@ import models.gui.MainFrame;
 
 public class Main {
     public static void main(String[] args) {
-
+        ChatClient client = new InMemoryChatClient();
         System.out.println("Hello World!");
-        MainFrame window = new MainFrame(800,600);
+        MainFrame window = new MainFrame(800,600, client);
 
     }
     private void test(){

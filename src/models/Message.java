@@ -1,6 +1,7 @@
 package models;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class Message {
     private String author;
@@ -23,5 +24,12 @@ public class Message {
 
     public LocalDateTime getCreated() {
         return created;
+    }
+
+    @Override
+    public String toString() {
+        String s = author + " [" + created.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME)+"]\n";
+        s +=text +"\n";
+        return s;
     }
 }
