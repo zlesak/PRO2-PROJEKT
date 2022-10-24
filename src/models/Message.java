@@ -43,6 +43,9 @@ public class Message {
 
     @Override
     public String toString() {
+        if(author.equals(AUTHOR_SYSTEM)){
+            return text+"\n";
+        }
         String s = author + " [" + created.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME)+"]\n";
         s +=text +"\n";
         return s;

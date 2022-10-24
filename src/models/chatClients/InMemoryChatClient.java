@@ -30,12 +30,14 @@ public class InMemoryChatClient implements ChatClient{
     public void login(String userName) {
         loggedUser = userName;
         loggedUsers.add(userName);
+        addSystemMessage(Message.USER_LOGGED_IN,loggedUser);
         raiseEventLoggedUsersChanged();
     }
 
     @Override
     public void logout() {
         loggedUsers.remove(loggedUser);
+        addSystemMessage(Message.USER_LOGGED_OUT,loggedUser);
         loggedUser = null;
         raiseEventLoggedUsersChanged();
     }
@@ -77,5 +79,9 @@ public class InMemoryChatClient implements ChatClient{
              listenerMessagesChanged) {
             al.actionPerformed(new ActionEvent(this,1,"messagesChanged"));
         }
+    }
+    private void addSystemMessage(int type, String userName){
+        messages.add(new Message(type, userName));
+        raiseEventMessagesChanged();
     }
 }
