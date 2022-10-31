@@ -1,11 +1,21 @@
 package models;
 
+import com.google.gson.annotations.Expose;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class Message {
+
+
+
+    @Expose (serialize = true,deserialize = true)
     private String author;
+
+    @Expose (serialize = true,deserialize = true)
     private String text;
+
+    @Expose (serialize = false,deserialize = false)
     private LocalDateTime created;
 
     public static final int USER_LOGGED_IN = 1;
@@ -46,7 +56,7 @@ public class Message {
         if(author.equals(AUTHOR_SYSTEM)){
             return text+"\n";
         }
-        String s = author + " [" + created.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME)+"]\n";
+        String s = author + " [" + created+"]\n";
         s +=text +"\n";
         return s;
     }
