@@ -20,6 +20,7 @@ import java.util.List;
 public class JsonChatFileOperations implements ChatFileOperations{
     private Gson gson;
     private static final String MESSAGES_FILE="./messages.json";
+    private static final String LOGGED_USERS_FILE="./users.json";
 
     public JsonChatFileOperations(){
         GsonBuilder gsonBuilder = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().setPrettyPrinting();
@@ -68,11 +69,40 @@ public class JsonChatFileOperations implements ChatFileOperations{
 
     @Override
     public List<String> loadLoggedUsers() {
-        return null;
+        try{
+
+            FileReader reader = new FileReader(LOGGED_USERS_FILE);
+            BufferedReader bufferedReader = new BufferedReader(reader);
+            StringBuilder jsonText = new StringBuilder();
+            String line;
+            while ((line = bufferedReader.readLine()) != null){
+                jsonText.append(line);
+            }
+            reader.close();
+
+            Type targetType = new TypeToken<String>(){}.getType();
+
+            List<String> loggedUsersList = gson.fromJson(jsonText.toString(),targetType);
+
+            return loggedUsersList;
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return new ArrayList<>();
     }
 
     @Override
     public void writeLoggedUsers(List<String> users) {
+        String jsonText = gson.toJson(users);
+
+        try{
+            FileWriter writer = new FileWriter(LOGGED_USERS_FILE);
+            writer.write(jsonText);
+            writer.flush();
+            writer.close();
+        }catch (IOException e){
+            e.printStackTrace();
+        }
 
     }
 }
